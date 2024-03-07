@@ -17,6 +17,20 @@ app.use(urlencoded({
  
 app.use(cookieParser());
 
+
+//routes
+
+//routes import
+
+import userRouter from "./routes/user.routes.js";
+
+//routes declaration
+app.use("/api/v1/users",userRouter); //it is a good practise to define api version in the url
+
+//http://localhost:3000/api/v1/users/register
+
+
+
 // app.use(express.static('public'));
 
 export default app;

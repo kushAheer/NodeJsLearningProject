@@ -1,3 +1,6 @@
+// This file is used to create a custom error class that extends the build in javascript error class.
+
+
 class ApiError extends Error{ //Extends the build in javascript error class
     constructor(statusCode, message = "Something Went Wrong" , error =[],stack =""){
 

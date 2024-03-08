@@ -3,11 +3,11 @@ import multer from "multer";
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, "./utils/upload/");
+        cb(null, "./Public/upload");
     },
     filename: function (req, file, cb){
         
-        cb(null, file.fieldname + '-' + uniqueSuffix);
+        cb(null, file.originalname);
     }
 })
 

@@ -2,9 +2,9 @@ import {v2 as cloudinary} from 'cloudinary';
 import fs from 'fs';
 
 cloudinary.config({ 
-  cloud_name: 'kushaheer', 
-  api_key: '384921319863159', 
-  api_secret: '1v5bfGRgDEGN9guKd8bB2EL49nU' 
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
+  api_key: process.env.CLOUDINARY_API_KEY, 
+  api_secret: process.env.CLOUDINARY_API_SECRET, 
 });
 
 const uploadOnCloudinary = async (localFilePath) => {

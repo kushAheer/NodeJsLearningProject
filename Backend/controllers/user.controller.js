@@ -7,12 +7,13 @@ import ApiResponse from "../utils/ApiResponse.js";
 const generateAccessAndRefreshToken = async (userId)=>
 {
     try{
+
         const userData = await User.findById(userId);
-
+        
         const refreshToken = userData.generateRefreshToken();
-
+      
         const accessToken = userData.generateAccessToken();
-
+      
         userData.refreshToken = refreshToken;
         await userData.save({validateBeforeSave : false});
 
@@ -20,7 +21,7 @@ const generateAccessAndRefreshToken = async (userId)=>
 
 
     }catch(err){
-        throw new ApiError(500,"Something went wrong");
+        throw new ApiError(500,err.message || "Something went");
     }
 
 }
@@ -104,7 +105,7 @@ const loginUser = asyncHandler(async (req, res, next) => {
 
     const {username,password,email} = req.body;
     
-    if(!username || !email){
+    if(!username && !email){
         throw new ApiError(400,"Username and Email is required");
     }
     const userData = await  User.findOne(
@@ -134,9 +135,7 @@ const loginUser = asyncHandler(async (req, res, next) => {
         secure : true,
     }
 
-    return res
-    .status(200)
-    .cookie("accessToken",accessToken,options)
+    return res.status(200).cookie("accessToken",accessToken,options)
     .cookie("refreshToken",refreshToken,options)
     .json(
         new ApiResponse(200,
@@ -145,11 +144,10 @@ const loginUser = asyncHandler(async (req, res, next) => {
                 accessToken,
                 refreshToken,
             }
+        
+            ,"User Logged In Successfully..."
         )
-        ,"User Logged In Successfully"
-        )
-            
-
+    );
     }
 )
 

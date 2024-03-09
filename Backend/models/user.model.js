@@ -62,7 +62,7 @@ userSchema.methods.isPasswordCorrect = async function(password){
 }
 userSchema.methods.generateAccessToken = function(){
 
-    jwt.sign(
+    return jwt.sign(
         {
             _id : this._id,
             email : this.email,
@@ -71,12 +71,16 @@ userSchema.methods.generateAccessToken = function(){
         },
         process.env.ACCESS_TOKEN_SECRET,
         {
-            expiresIn : process.env.ACCESS_TOKEN_EXPIRY
+            expiresIn : "1d"
         }
+        
     )
+    
 }
 userSchema.methods.generateRefreshToken = function(){
-    jwt.sign(
+    
+
+    return jwt.sign(
         {
             _id : this._id,
 
@@ -86,6 +90,7 @@ userSchema.methods.generateRefreshToken = function(){
             expiresIn : process.env.REFRESH_TOKEN_EXPIRES
         }
     )
+    
 }
 
 export const User = mongoose.model("User", userSchema);
